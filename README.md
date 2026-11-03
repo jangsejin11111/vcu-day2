@@ -8,7 +8,7 @@
 
 데이터는 이 폴더 `.data/`에 보관합니다. 재실행해도 남으며 Git에 포함되지 않습니다. 로컬 데이터와 배포 데이터는 별도입니다.
 
-## GitHub → Netlify (아직 배포하지 않음)
+## GitHub → Netlify
 
 이 폴더만 새 GitHub 저장소로 올리거나 기존 저장소에서 Netlify Base directory를 `workshop-02`로 지정합니다. 1회차 Netlify 프로젝트와 별개의 새 프로젝트를 만드세요.
 
@@ -62,3 +62,10 @@ VAD는 **0~1** 척도입니다. V는 불쾌→쾌, A는 차분함→각성, D는
 ## 더블클릭으로 시작
 
 `Start Workshop.cmd`를 더블클릭하면 웹사이트, Ollama, 분석 워커를 순서대로 확인하고 꺼진 항목을 실행한 뒤 브라우저를 엽니다. 비밀번호는 `.env`에서 읽으므로 매번 입력하지 않습니다. 이미 실행 중인 항목은 중복 실행하지 않습니다. 성공 후 실행 창은 닫히고 서비스는 백그라운드에서 유지됩니다. 컴퓨터를 재시작한 뒤에는 다시 더블클릭하세요. 오류가 나면 창이 남으며 상세 로그는 `.data/launcher-*.log`에 기록됩니다. Node.js, Python, Ollama와 Qwen 모델은 사전에 설치되어 있어야 합니다. 현재 컴퓨터에는 준비되어 있습니다.
+
+## 2회차 온라인 운영
+
+- GitHub: https://github.com/jangsejin11111/vcu-day2
+- 사이트: https://karts-vcu-day2.netlify.app
+- Netlify 프로젝트: karts-vcu-day2 (1회차와 별개)
+- `.env`에 `VCU_SITE_URL=https://karts-vcu-day2.netlify.app`를 지정하면 바탕화면 바로가기가 배포 사이트를 열고 해당 사이트 전용 분석 워커를 시작합니다. 로컬 개발로 돌아가려면 값을 `http://localhost:5174`로 바꿉니다. 온라인 댓글은 로컬 테스트 댓글과 별도로 저장됩니다.

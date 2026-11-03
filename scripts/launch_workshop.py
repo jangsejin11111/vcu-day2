@@ -28,12 +28,16 @@ def start(exe, args, name, env):
         return subprocess.Popen([str(exe), *args], cwd=ROOT, env=env, stdin=subprocess.DEVNULL, stdout=out, stderr=err, creationflags=subprocess.CREATE_NO_WINDOW)
 
 def worker_running():
-    command = "Get-CimInstance Win32_Process -Filter \"Name = 'python.exe' OR Name = 'pythonw.exe'\" | Where-Object { $_.CommandLine -match 'scripts[\\/]vad_worker\\.py' -and $_.CommandLine -match '--site\\s+http://localhost:5174(?:\\s|$)' } | Select-Object -ExpandProperty ProcessId"
+    command = "Get-CimInstance Win32_Process -Filter \"Name = 'python.exe' OR Name = 'pythonw.exe'\" | Where-Object { $_.CommandLine -like '*vad_worker.py*' } | Select-Object -ExpandProperty CommandLine | ConvertTo-Json -Compress"
     result = subprocess.run(["powershell.exe", "-NoProfile", "-Command", command], capture_output=True, text=True, creationflags=subprocess.CREATE_NO_WINDOW, timeout=20)
-    if result.returncode: raise RuntimeError("Could not check running workers: " + result.stderr)
-    return bool(result.stdout.strip())
+    if result.returncode: raise RuntimeError("Could not check running workers.")
+    if not result.stdout.strip(): return False
+    commands = json.loads(result.stdout)
+    if isinstance(commands, str): commands = [commands]
+    return any(("--site " + SITE) in c for c in commands)
 
 def main():
+    global SITE
     # A Windows mutex prevents two double-clicks from launching duplicate services.
     kernel = ctypes.WinDLL("kernel32", use_last_error=True)
     kernel.CreateMutexW.restype = ctypes.c_void_p
@@ -50,10 +54,13 @@ def main():
         env = os.environ.copy()
         for line in (ROOT / ".env").read_text(encoding="utf-8-sig").splitlines():
             key, sep, value = line.partition("=")
-            if sep and key in ("VCU_ADMIN_PASSWORD", "VCU_AUTH_SECRET"): env[key] = value.strip()
+            if sep and key in ("VCU_ADMIN_PASSWORD", "VCU_AUTH_SECRET", "VCU_SITE_URL"): env[key] = value.strip()
         if not env.get("VCU_ADMIN_PASSWORD"): raise RuntimeError("Set VCU_ADMIN_PASSWORD in .env first.")
-        print("[1/3] Website", flush=True)
+        SITE = env.get("VCU_SITE_URL", SITE).rstrip("/")
+        print("[1/3] Website: " + SITE, flush=True)
         state = probe(SITE + "/api/state")
+        if state is None and SITE != "http://localhost:5174":
+            raise RuntimeError("Cannot reach deployed website. Check your internet connection.")
         if state is None:
             node = shutil.which("node")
             if not node: raise RuntimeError("Node.js is not installed.")
