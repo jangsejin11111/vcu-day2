@@ -71,3 +71,6 @@ button,a,input,textarea,select{touch-action:manipulation}.modal{max-height:85dvh
 .host-footer button{border:0;background:transparent;color:#999;font-size:11px;font-weight:500;padding:10px 18px;min-height:40px}.host-footer button:hover,.host-footer button:focus-visible{color:#444}
 .pin>span{color:var(--person-ink,#fff)}.nickname-dot{display:inline-block;width:9px;height:9px;border-radius:50%;vertical-align:middle}.person-avatar{border:1px solid #1112}
 @media(max-width:650px){header{background:#f5f5f5}.toolbar{min-height:50px}.host-footer{padding-top:24px}.host-footer button{min-height:44px}}
+
+/* Spread reflections across the board before allowing overlap. */
+.pinboard{height:260px}.pin{width:100px;max-width:100px}.pin small{max-width:90px}.pin:hover{z-index:6}@media(max-width:580px){.pinboard{height:240px}}
