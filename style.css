@@ -61,3 +61,13 @@ button,a,input,textarea,select{touch-action:manipulation}.modal{max-height:85dvh
  .atlas{margin:24px 0 35px}.atlas-heading{display:block}.atlas-heading h2{font-size:21px}.atlas-heading p{font-size:12px;line-height:1.7}.atlas-heading select{width:100%;min-height:46px;margin-top:8px}.chart{height:340px;margin-top:22px}.plot{inset:45px 40px}.quadrant{font-size:9px;padding:2px}.q1,.q3{left:47px}.q2,.q4{right:47px}.legend{justify-content:flex-start;gap:12px;font-size:12px}.result-list button{min-height:64px}.result-list b{font-size:13px}.result-list span{font-size:13px}.atlas-empty{padding:45px 18px}.atlas-empty h2{font-size:22px}
 }
 @media(max-width:360px){.header-tools{gap:0}.nickname{max-width:90px}nav{font-size:11px;gap:8px}.status{font-size:10px}.scene-copy{grid-template-columns:45px 1fr;gap:10px}.scene-copy img{width:45px;height:68px}}
+
+/* Neutral paper and a discreet facilitator entry. */
+:root,body{background:#ededed;color:#111}header{background:#f5f5f5}
+.scene,dialog,.result-list button{background:#fafafa}.scene-copy img{box-shadow:3px 3px 0 #c6c6c6}
+.pinboard{background-color:#e8e8e8;border-color:#b5b5b5}.empty-board>span{background:#fafafa}
+.chart{background-color:#fafafa}.quadrant{background:#fafafa}.atlas-empty{background-color:#e1e1e1}
+.job-status,.error{background:#dedede}.host-footer{display:flex;justify-content:center;padding:32px 0 max(24px,env(safe-area-inset-bottom));border-top:1px solid #ddd}
+.host-footer button{border:0;background:transparent;color:#999;font-size:11px;font-weight:500;padding:10px 18px;min-height:40px}.host-footer button:hover,.host-footer button:focus-visible{color:#444}
+.pin>span{color:var(--person-ink,#fff)}.nickname-dot{display:inline-block;width:9px;height:9px;border-radius:50%;vertical-align:middle}.person-avatar{border:1px solid #1112}
+@media(max-width:650px){header{background:#f5f5f5}.toolbar{min-height:50px}.host-footer{padding-top:24px}.host-footer button{min-height:44px}}
